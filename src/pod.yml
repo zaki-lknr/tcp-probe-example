@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sockserv-01
+spec:
+  containers:
+  - image: sockserv:v1.0
+    name: sockserv
