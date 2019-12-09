@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sockserv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sockserv
+  template:
+    metadata:
+      labels:
+        app: sockserv
+    spec:
+      containers:
+        - name: sockserv
+          image: sockserv:v1.0
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8081
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sockserv
+  name: sockserv
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: 8081-tcp
+    port: 8081
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: sockserv
+  type: NodePort
+
